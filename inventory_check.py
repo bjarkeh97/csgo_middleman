@@ -1,6 +1,5 @@
-import numpy as np
-import pandas as pd
 import sys
+import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
@@ -21,12 +20,14 @@ driver = webdriver.Chrome(chrome_options=chrome_options)
 
 try:
     driver.get(profile_url)
-    WebDriverWait(driver,5).until(
+    WebDriverWait(driver, 5).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, "#acceptAllButton"))
     ).click()
     select = Select(driver.find_element(By.CSS_SELECTOR,"#responsive_inventory_select")) # Create Select instance to work with dropdown
     select.select_by_value('#730') # Choose CSGO 
+    item_list = driver.find_elements(By.CSS_SELECTOR,".itemHolder")
 except Exception as e:
     print(e)
 
+print(item_list)
 print("finish")
