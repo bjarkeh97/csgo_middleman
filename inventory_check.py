@@ -8,6 +8,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+import lib
+
 def scroll_down(driver):
     """A method for scrolling the page."""
 
@@ -37,23 +39,9 @@ chrome_options.add_argument("--window-size=700,5080")
 
 #Set argument variable as profile ID
 profile_id = sys.argv[1]
-
-profile_url = f"https://steamcommunity.com/profiles/{profile_id}/inventory/"
-
 driver = webdriver.Chrome(chrome_options=chrome_options)
 
-try:
-    driver.get(profile_url)
-    select = Select(driver.find_element(By.CSS_SELECTOR,"#responsive_inventory_select")) # Create Select instance to work with dropdown
-    select.select_by_value('#730') # Choose CSGO 
-    WebDriverWait(driver, 5).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "#acceptAllButton"))
-    ).click()
-    scroll_down(driver)
-    time.sleep(3) # When we have number of items we can create wait conditions
-    web_element_list = driver.find_elements(By.CSS_SELECTOR,".item.app730.context2")
-except Exception as e:
-    print(e)
+web_element_list = lib.find_all_CSGO_items(driver, profile_id)
 
 
 
