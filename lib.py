@@ -31,7 +31,7 @@ def scroll_down(driver):
 
         last_height = new_height
 
-def find_all_CSGO_items(driver: webdriver, profile_id: str) -> list:
+def find_all_CSGO_items(driver: webdriver, profile_id: str , wait:int = 3) -> list:
     profile_url = f"https://steamcommunity.com/profiles/{profile_id}/inventory/"
     try:
         driver.get(profile_url)
@@ -41,7 +41,7 @@ def find_all_CSGO_items(driver: webdriver, profile_id: str) -> list:
             EC.element_to_be_clickable((By.CSS_SELECTOR, "#acceptAllButton"))
         ).click()
         scroll_down(driver)
-        time.sleep(3) # When we have number of items we can create wait conditions
+        time.sleep(wait) # When we have number of items we can create wait conditions
         web_element_list = driver.find_elements(By.CSS_SELECTOR,".item.app730.context2")
         return web_element_list
     except Exception as e:

@@ -43,6 +43,7 @@ driver = webdriver.Chrome(chrome_options=chrome_options)
 
 web_element_list = lib.find_all_CSGO_items(driver, profile_id)
 
+item_img_dict = [x.get_attribute('src') for x in web_element_list]
 
 
 """ for web_element in web_element_list:
