@@ -44,20 +44,20 @@ driver = webdriver.Chrome(chrome_options=chrome_options)
 
 try:
     driver.get(profile_url)
+    select = Select(driver.find_element(By.CSS_SELECTOR,"#responsive_inventory_select")) # Create Select instance to work with dropdown
+    select.select_by_value('#730') # Choose CSGO 
     WebDriverWait(driver, 5).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, "#acceptAllButton"))
     ).click()
-    select = Select(driver.find_element(By.CSS_SELECTOR,"#responsive_inventory_select")) # Create Select instance to work with dropdown
-    select.select_by_value('#730') # Choose CSGO 
     scroll_down(driver)
+    time.sleep(3) # When we have number of items we can create wait conditions
     web_element_list = driver.find_elements(By.CSS_SELECTOR,".item.app730.context2")
 except Exception as e:
     print(e)
 
-items = []
-error_list = []
 
-for web_element in web_element_list:
+
+""" for web_element in web_element_list:
     id_ = web_element.get_attribute('id')
     try:
         WebDriverWait(
@@ -84,8 +84,7 @@ try:
                 driver,3).until(EC.element_to_be_clickable((By.CSS_SELECTOR,".economy_item_popup_dismiss"))
             ).click()
 except Exception as e:
-    print(e)
+    print(e) """
 
-print(web_element_list)
 print("finish")
 driver.quit()
